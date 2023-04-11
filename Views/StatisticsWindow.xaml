@@ -1,0 +1,186 @@
+﻿<Window x:Class="QuanLyKho_Project.Views.StatisticsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QuanLyKho_Project.Views"
+        xmlns:Wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        mc:Ignorable="d"
+        Title="StatisticsWindow" Height="700" Width="800"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        x:Name="window"
+        DataContext="{StaticResource StaticVM}"
+        xmlns:controlBar="clr-namespace:QuanLyKho_Project.UCs"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        FontFamily="{DynamicResource MaterialDesignFont}">
+    <Window.Background>
+        <ImageBrush ImageSource="/staticSrc/img/background_main.jpg"></ImageBrush>
+    </Window.Background>
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <controlBar:ControlBarUC Tag="{Binding Title, ElementName=window}"></controlBar:ControlBarUC>
+        </Grid>
+        <Grid Grid.Row="1">
+            <materialDesign:Card Margin="5">
+                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="3*"></RowDefinition>
+                        <RowDefinition Height="0.5*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                            <materialDesign:ColorZone Grid.Column="0"
+                                                      Width="300"
+                                                      Padding="8,4,8,4"
+                                                      Panel.ZIndex="1"
+                                                      HorizontalAlignment="Left"
+                                                      VerticalAlignment="Center"
+                                                      materialDesign:ElevationAssist.Elevation="Dp2"
+                                                      CornerRadius="2"
+                                                      Mode="Standard">
+                            <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                <Button Style="{StaticResource MaterialDesignToolButton}">
+                                        <materialDesign:PackIcon Kind="Search" 
+                                                                 Opacity=".56" />
+                                    </Button>
+                                    <TextBox Grid.Column="1"
+                                             MinWidth="100"
+                                             Margin="8,0,0,0"
+                                             VerticalAlignment="Center"
+                                             materialDesign:HintAssist.Hint="Build a search bar"
+                                             materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                             BorderThickness="0" />
+                                    <Button Grid.Column="2"
+                                            Style="{StaticResource MaterialDesignToolButton}">
+                                        <materialDesign:PackIcon Margin="8,0,0,0"
+                                                                 Kind="Microphone"
+                                                                 Opacity=".56" />
+                                    </Button>
+                                </Grid>
+                            </materialDesign:ColorZone>
+                        <Button Width="100"
+                                Margin="10,0, 0,0 "
+                                Grid.Column="1"
+                                Content="Search"
+                                Command="{Binding Search1Button}"
+                                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                Style="{StaticResource MaterialDesignRaisedButton}"
+                                ToolTip="Resource name: MaterialDesignRaisedButton" />
+
+                        <Button Width="100"
+                                Margin="10,0,0,0 "
+                                Grid.Column="2"
+                                Content="Reload"
+                                Command="{Binding ReloadButton}"
+                                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                Style="{StaticResource MaterialDesignRaisedButton}"
+                                ToolTip="Resource name: MaterialDesignRaisedButton" />
+                    </Grid>
+
+                    <Grid Grid.Row="1" Margin="0, 10, 0, 10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0"
+                              Margin="5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="9*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                                <Wpf:PieChart Series="{Binding PieSeriesCollection}"
+                                              LegendLocation="Bottom"
+                                              Grid.Row="0"
+                                              Hoverable="False"
+                                              DataTooltip="{x:Null}">
+                                </Wpf:PieChart>
+                            
+                        </Grid>
+                        <Grid Grid.Column="1"
+                              Margin="5">
+                            <Wpf:CartesianChart Series="{Binding CarteSeriesCollection}"
+                                                LegendLocation="Right">
+                                <Wpf:CartesianChart.AxisX>
+                                    <Wpf:Axis Title="Time"
+                                                  LabelFormatter="{Binding Formatter}"
+                                                  MinValue="{Binding InitialDateTime.Ticks}" />
+                                </Wpf:CartesianChart.AxisX>
+                                <Wpf:CartesianChart.AxisY>
+                                    <Wpf:Axis Title="Amount"/>
+                                </Wpf:CartesianChart.AxisY>
+                            </Wpf:CartesianChart>
+                        </Grid>
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0"
+                               FontSize="10"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               Content="The percentage of product in warehouse" />
+                        <Label Grid.Column="1"
+                               FontSize="10"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               Content="Digram compare input and output price" />
+                    </Grid>
+                </Grid>
+            </materialDesign:Card>
+        </Grid>
+        <Grid Grid.Row="2" Margin="5">
+            <materialDesign:Card>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0"
+                                Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center"
+                                   Margin="10 0">Search</TextBlock>
+                        <TextBox Name="Query"
+                                 VerticalContentAlignment="Center"
+                                 Width="100"
+                                 Height="30"></TextBox>
+                    </StackPanel>
+                    <Wpf:CartesianChart Grid.Row="1" Series="{Binding ColumnSeriesCollection}" LegendLocation="Right">
+                        <Wpf:CartesianChart.AxisX>
+                            <Wpf:Axis Title="Customers"
+                                      Labels="{Binding ColumnXLabels}"></Wpf:Axis>
+                        </Wpf:CartesianChart.AxisX>
+                        <Wpf:CartesianChart.AxisY>
+                            <Wpf:Axis Title="Total Price" Labels="{Binding ColumnYLabels}"></Wpf:Axis>
+                        </Wpf:CartesianChart.AxisY>
+                    </Wpf:CartesianChart>
+                </Grid>
+            </materialDesign:Card>
+        </Grid>
+    </Grid>
+</Window>

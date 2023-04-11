@@ -1,0 +1,15 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:viewmodel="clr-namespace:QuanLyKho_Project.ViewModel">
+    <viewmodel:LoginViewModel x:Key="LoginVM"></viewmodel:LoginViewModel>
+    <viewmodel:MainViewModel x:Key="MainVM"></viewmodel:MainViewModel>
+    <viewmodel:UnitViewModel x:Key="UnitVM"></viewmodel:UnitViewModel>
+    <viewmodel:SupplierViewModel x:Key="SupplierVM"></viewmodel:SupplierViewModel>
+    <viewmodel:ObjectViewModel x:Key="ObjectVM"></viewmodel:ObjectViewModel>
+    <viewmodel:CustomerViewModel x:Key="CustomerVM"></viewmodel:CustomerViewModel>
+    <viewmodel:AccountViewModel x:Key="AccountVM"></viewmodel:AccountViewModel>
+    <viewmodel:ImportViewModel x:Key="ImportVM"></viewmodel:ImportViewModel>
+    <viewmodel:OutputViewModel x:Key="OutputVM"></viewmodel:OutputViewModel>
+    <viewmodel:StatisticViewModel x:Key="StaticVM"></viewmodel:StatisticViewModel>
+
+</ResourceDictionary>
